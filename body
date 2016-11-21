@@ -1,0 +1,90 @@
+require 'active_support/all' #for '.ordinalize'
+
+closed = 0 # a closed door.
+open = 1 # an open door
+
+# fill the hallway with closed doors.
+print "How many doors do you wanna calculate? "
+doors = gets.to_i
+hallway = []
+doors.times do hallway << closed end
+
+# puts hallway.inspect
+
+index = 0
+pass_number = 1
+
+## our toggle switch makes the passes
+while pass_number <= doors # 1
+  puts "Pass number #{pass_number}.".rjust(75)
+  puts "Every #{(index + 1).ordinalize} door.".rjust(75)
+  while index < doors # 0
+    if hallway[ index ] == closed
+      hallway[ index ] = open
+    else hallway[ index ] == open
+      hallway[ index ] = closed
+    end
+    index += pass_number
+  end
+  index = pass_number
+  pass_number += 1
+  puts hallway.inspect
+end
+
+## number of open and closed doors.
+orr = [] 
+crr = []
+
+hallway.each do |door|
+  if door == open
+    orr << door
+  else
+    crr << door
+  end
+end
+
+puts "Doors: #{doors}".rjust(75)
+puts "#{orr.length} doors open.".rjust(75)
+puts "#{crr.length} doors closed.".rjust(75)
+
+# open to closed ratio
+o_ratio = ( orr.length.to_f / doors ) * 100
+c_ratio = ( crr.length.to_f / doors ) * 100
+puts "Open : Closed  ::  #{ o_ratio.round(2) } : #{ c_ratio.round(2) }".rjust(75)
+
+
+# door number state check
+print "Check door No.: "
+detect = gets.to_i # for example: 3
+
+if hallway[ detect - 1 ] == closed
+  state = 'Closed'
+else
+  state = 'Open'
+end
+
+if detect < 1 || detect > doors
+  puts "Door No. #{detect} does not exist.".rjust(75)
+else
+  puts "Door No. #{detect} is #{state}.".rjust(75)
+end
+
+
+=begin trying to worl a throw..catch  sort of a thing here, or maybe something like a goto
+still learning about those things
+
+puts "Check doors between..."
+print "Head: "
+he_ad = gets.to_i
+print "Tail: "
+ta_il = gets.to_i
+
+if 
+  he_ad < ta_il 
+  puts "The Head Number should be lesser than The Tail Number."
+end
+  
+head_tail = hallway[he_ad..ta_il]
+
+puts head_tail.inpect
+=end
